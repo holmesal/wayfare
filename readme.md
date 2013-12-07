@@ -39,6 +39,8 @@ Let's say I was starting to work on a new feature to generate buildings. Here's 
 Cool. So at this point I've got a fresh new branch, cut off of develop. In fact, right now it's identical to develop. Now, I want to create a pull request so that we've got a place to talk about this branch now, and merge it in later.
 The easiest way to do this is through the github repo page. If you just pushed it up, you should see a prompt to create a pull request. If you don't just pick your branch from the dropdown, and click the green button with the arrow-square. Enter a bit of info about what the hell this branch is for, and click create. That's it for now - don't press the big merge button.
 
+** I just realized that you can't create a pull request while your branch is identical to develop. So do the pull-request-on-github bit after you make a couple of commits**
+
 So at this point I could code happily away, and when I hit a point where I want to "save" my changes, I can do this:
 
 Saving changes
