@@ -1,0 +1,17 @@
+{
+  "name": "wayfare",
+  "description": "Go wander.",
+  "version": "0.0.1",
+  "engines": [
+    "node >= 0.10.0"
+  ],
+  "main": "index.js",
+  "dependencies": {
+    "request": "~2.27.0",
+    "xml2js": "~0.2.8",
+    "debug": "~0.7.4",
+    "express": "~3.4.4",
+    "firebase": "~0.6.22",
+    "geohash": "0.0.1"
+  }
+}

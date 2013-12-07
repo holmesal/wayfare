@@ -1,0 +1,18 @@
+<div class="header">
+	<ul class="nav nav-pills pull-right">
+		<li><a href="#">Home</a></li>
+		<li class="active"><a href="#/generate">Generate</a></li>
+		<li><a href="#/view">View</a></li>
+	</ul>
+	<h3 class="text-muted">canvasTilemap</h3>
+</div>
+
+<p>You are at {{position.coords.latitude}}, {{position.coords.longitude}} which maps to the geohash <strong>{{hash.box}}</strong></p>
+
+<tiler draw="toDraw" updateworld="updateworld"></tiler>
+
+<viewer world="world" hash="hash.box"></viewer>
+
+<div class="footer">
+	<p>♥ from the Yeoman team</p>
+</div>
