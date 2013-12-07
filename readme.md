@@ -4,47 +4,24 @@ wayfare
 Workflow
 ===
 
-This is a workflow I've been wanting to use for a while - I think it'll be a good one.
+Commit early and often.
 
-The main idea is to create a feature branch and a pull request every time you start working on something new.
-The branch gives you an isolated place to commit your code, while keeping in sync with the develop branch.
-The pull request gives us a place to discuss that specific branch, and an easy way to merge it in at the end.
+Always do a `git pull --rebase origin develop` before you push any code to develop.
 
-**Such flow. Very git.**
-
-We're gonna use something called git-flow for this project. It's really just a convention for naming branches. There are four types of branches in git flow:
-
-1. `develop` - holds the most current code. when feature branches are done, they get merged into here. before you finish a feature, you'll sync up with develop so only your changes get pushed.
-2. `feature/your_feature_name` - based on develop. start these when you start working on a feature. when you're done, merge them back into develop.
-3. `master` - this is production code. it will always be exactly what is deployed online. to push a change to master is to push a change to the world.
-4. `hotfix` - based on master. start these when you want to fix something that has been pushed to master. when you're done, merge them back into master, then rebase develop on top of master. you won't use these much.
-
-Examples
+How to Github
 ===
 
-Starting to work on something
+Clone shit
 ---
 
-Let's say I was starting to work on a new feature to generate buildings. Here's what I would do:
-(all commands run from the root of the repo)
+Navigate to the folder where you'd like the repo to live
 
-`git fetch --all` to get info from github on the state of all repos
+`git clone git@github.com:holmesal/wayfare.git` to pull down the repo
 
-`git pull --rebase origin develop` from the remote `origin` (should point to github), pull the develop branch down. the `--rebase` means that if you have any changes locally, the branch will get pulled down, then your changes will be added on top.
-
-`git checkout -b feature/generate-buildings` make a new branch called feature/generate-buildings, and switch to it. At this point, this branch will be exactly the same as develop
-
-`git push origin feature/generate-buildings` we have this branch locally, but github doesn't know about it yet. let's fix that by pushing it up to github (the `origin` remote)
-
-Cool. So at this point I've got a fresh new branch, cut off of develop. In fact, right now it's identical to develop. Now, I want to create a pull request so that we've got a place to talk about this branch now, and merge it in later.
-The easiest way to do this is through the github repo page. If you just pushed it up, you should see a prompt to create a pull request. If you don't just pick your branch from the dropdown, and click the green button with the arrow-square. Enter a bit of info about what the hell this branch is for, and click create. That's it for now - don't press the big merge button.
-
-** I just realized that you can't create a pull request while your branch is identical to develop. So do the pull-request-on-github bit after you make a couple of commits**
-
-So at this point I could code happily away, and when I hit a point where I want to "save" my changes, I can do this:
-
-Saving changes
+Code shit
 ---
+
+Make changes and stuff. Every so often you should commit (save snapshot of) code:
 
 `git status` shows you what's up in the repo
 
@@ -54,23 +31,36 @@ Saving changes
 
 `git status` should now show that you have no changes
 
-`git push origin feature/generate-buildings` pushes this commit up to github. It'll also show up in that pull request.
-
-My changes have now been saved, and persisted to the server. Let's say I make 10 more commits, and then I decide that this feature is done. After discussing on the PR if there are any conflicts or etc, I'm ready to merge this branch in. Wait! Don't click the merge button in the pull request! If you've been working on this branch for a while, some progress  has probably been made on the develop branch. If you merge your branch straight in, you'll overwrite those changes with your old version of those files, because you haven't updated them since you started the branch. Let's fix that:
-
-Finishing something
+Pull shit
 ---
 
-`git checkout develop` to switch to the develop branch. make sure you've committed all of your changes first.
+Anytime you want to update your code so it's in sync with what's on github, do the following. MAKE SURE YOU COMMIT FIRST. `git status` should show that you have no changes.
 
-`git fetch --all` to get info about any changes from github on the develop branch
+`git pull --rebase origin develop` pulls down the develop branch, rewinds your code to the last time you pulled it down, replaces then-develop with now-develop, and fast-forwards your changes on top of it. The `--rebase` is hugely important, otherwise it will try to straight-up merge your code with the origin/develop, which might not work.
 
-`git pull --rebase origin develop` to pull down the version of develop from github and merge it with your local version
+Push shit
+---
 
-`git checkout feature/generate-buildings` to switch back to your feature branch
+Anytime you want to push your changes out to github, make sure you're all committed-up and ready to roll (`git status` shows no changes).
 
-`git rebase develop` remember how you based this branch on develop when you created it? rebase goes back to that point, and pretended that you based it on the newest version of develop, instead of the one that was there when you started. Your changes get "replayed" on top of the new develop. You're changing the "base" of your feature branch to the new develop. "re"-"base"
+`git pull --rebase origin develop` (same as pull shit) to make sure that if there have been any changes to the code on github since you last pulled, they're now incorporated into the code that you're about to push back to github. This keeps you from rolling back changes other people have made, because you have an outdated version of code. `develop` is the name of the branch to pull.
 
-`git push origin feature/generate-buildings` to update the branch on github.
+`git push origin develop` to push your code up to github. If you get an error about the tip of your branch being behind, make sure you `pull --rebase` as mentioned above.
 
-Now if you go back to the pull request, you should see that the only changes listed are to the files you changed in your feaure branch. Awesome. At this point, you're cool to merge this branch with develop. Then, anyone else working on a feature branch can pull down develop 
+*Advanced* Branch shit
+---
+
+Sometimes you want to try doing something another way, or work on a few things at the same time, but not in the same code base. You can "branch" your code, which creates a new branch based on the one you're currently on. For example, let's say I'm working on "develop" and I want to go off on a side tangent about generating buildings. Here's what I would do:
+
+`git commit -am 'some commit message'` commit all your changes first. If you don't do this, your uncommitted changes will carry over to your new branch.
+
+`git checkout -b generate-buildings` create a new branch called generate-buildings and switch to it.
+
+Then you can commit and all that jazz, except now you're on a different branch. You can list branches with `git branch` and change them with `git branch branch_name`.
+
+If you decide you want to keep this branch and merge it back into your copy of develop, you can do this like so: (make sure you're all committed up first)
+
+`git checkout develop` to switch to the develop branch
+`git merge generate-buildings` to merge your branch back into develop.
+
+If that goes okay, your changes are now in develop. You can delete that other branch if you want. I tend to keep them around cuz I'm an idiot.
