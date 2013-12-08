@@ -1,13 +1,17 @@
 'use strict'
 
 angular.module('tilemapApp')
-  .controller 'WalkCtrl', ($scope, angularFire) ->
+  .controller 'WalkCtrl', ($scope, $routeParams, angularFire) ->
 
 	$scope.precision = 8
 
 	init = ->
 		# Get the current location
-		navigator.geolocation.getCurrentPosition showPosition
+		console.log $routeParams.hash
+		if $routeParams.hash
+			$scope.hash = $routeParams.hash
+		else
+			navigator.geolocation.getCurrentPosition showPosition
 
 	showPosition = (position) ->
 		console.log position

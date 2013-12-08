@@ -7,7 +7,7 @@
 	<h3 class="text-muted">canvasTilemap</h3>
 </div>
 
-<div>
+<!-- <div>
 	<p>Want to generate and store a tilemap based on your current location?</p>
 	<a class="btn btn-success" href="#/generate">Generate</a>
 </div>
@@ -15,12 +15,18 @@
 <div>
 	<p>Want to see the generated tilemap for your current location?</p>
 	<a class="btn btn-success" href="#/view">Look here, see</a>
+</div> -->
+
+<div>
+	<p>Want to move around a specific geohash?</p>
+	<input type="text" class="form-control hashinput" ng-model="hash">
+	<a class="btn btn-success" href="#/walk/{{hash}}">load geohash {{hash}}</a>
 </div>
 
 <hr>
 <div>
 	<p>Want move around tilemaps in your area?</p>
-	<a class="btn btn-success" href="#/walk">go play</a>
+	<a class="btn btn-success" href="#/walk">load current location</a>
 </div>
 
 <!-- <p>You are at {{position.coords.latitude}}, {{position.coords.longitude}}</p> -->

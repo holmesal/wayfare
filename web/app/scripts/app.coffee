@@ -12,13 +12,13 @@ angular.module('tilemapApp', [
 			.when '/',
 				templateUrl: 'views/main.html'
 				controller: 'MainCtrl'
-			.when '/generate',
-				templateUrl: 'views/generate.html'
-				controller: 'GenerateCtrl'
-			.when '/view',
-			  templateUrl: 'views/view.html',
-			  controller: 'ViewCtrl'
-			.when '/walk',
+			# .when '/generate',
+			# 	templateUrl: 'views/generate.html'
+			# 	controller: 'GenerateCtrl'
+			# .when '/view',
+			#   templateUrl: 'views/view.html',
+			#   controller: 'ViewCtrl'
+			.when '/walk/:hash?',
 			  templateUrl: 'views/walk.html',
 			  controller: 'WalkCtrl'
 			.otherwise

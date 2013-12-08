@@ -10,6 +10,7 @@ angular.module('tilemapApp')
 	restrict: 'E'
 	scope:
 		position: '='
+		hash: '='
 	link: (scope, element, attrs) ->
 
 		scope.nodeServer = "#{$location.protocol()}://#{$location.host()}:9300"
@@ -61,7 +62,13 @@ angular.module('tilemapApp')
 			scope.$watch 'position', (position) ->
 				if position
 					initCanvas()
-					initHash()
+					initHash getGeoHash(scope.position)
+					animate()
+
+			scope.$watch 'hash', (hash) ->
+				if hash
+					initCanvas()
+					initHash(hash)
 					animate()
 
 			# $timeout ->
@@ -83,7 +90,7 @@ angular.module('tilemapApp')
 
 			width = canvas.width
 
-			scope.blockSize = width / 8 #scope.world.meta.dims.x
+			scope.blockSize = width / 30 #scope.world.meta.dims.x
 			# console.log scope.blockSize
 
 			# Init touch events
@@ -122,11 +129,10 @@ angular.module('tilemapApp')
 				y: e.gesture.deltaY
 			# console.log scope.touch
 
-		initHash = ->
+		initHash = (hash) ->
 			#	1 	2 	3
 			#	8	0	4
 			#	7	6	5
-			hash = getGeoHash scope.position
 			neighbors = geohash.Neighbours hash
 			# Start with the current hash
 			scope.hashes = [hash]
