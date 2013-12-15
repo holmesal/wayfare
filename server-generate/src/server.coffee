@@ -2,6 +2,7 @@ request = require 'request'
 express = require 'express'
 servlog = require('debug')('servlog')
 {Populator} = require './populator'
+{blocks} = require './blocks'
 
 
 # {Tile} = require './tile'
@@ -25,6 +26,9 @@ app.configure ->
 	app.use allowCrossDomain
 	app.use express.bodyParser()
 
+app.get '/blocks', (req, res) ->
+	res.json blocks
+
 
 app.get '/populate/:centerHash', (req, res) ->
 	servlog "got population request for hash #{req.params.hash}"
@@ -36,6 +40,8 @@ app.get '/populate/:centerHash', (req, res) ->
 app.listen 9300, ->
 	servlog 'server started! woohoo!'
 	# Fake a populator request
-	centerHash = 'drt2v5b0'
+	# centerHash = 'drt2v5b0'
+	# centerHash = 'drt2yyy0'
+	centerHash = 'drt2yry5'
 	new Populator centerHash
 		

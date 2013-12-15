@@ -30,14 +30,16 @@ angular.module('tilemapApp')
 			y: 0.5
 
 		scope.tileSources = {}
-		scope.tileSources.grass = new Image
-		scope.tileSources.grass.src = "http://minecraft-cube.comuv.com/textures/grass-top.png"
-		scope.tileSources.road = new Image
-		scope.tileSources.road.src = "http://i.imgur.com/eqpOX.png"
+
+
+		# scope.tileSources.grass = new Image
+		# scope.tileSources.grass.src = "http://minecraft-cube.comuv.com/textures/grass-top.png"
+		# scope.tileSources.road = new Image
+		# scope.tileSources.road.src = "http://i.imgur.com/eqpOX.png"
 		# scope.tileSources.building = new Image
 		# scope.tileSources.building.src = "http://img862.imageshack.us/img862/7013/woodenplanks.png"
-		scope.tileSources.unknown = new Image
-		scope.tileSources.unknown.src = "https://pbs.twimg.com/profile_images/378800000785385876/2746948649d44b5a8a050a87fd81259e.png"
+		# scope.tileSources.default = new Image
+		# scope.tileSources.default.src = "https://pbs.twimg.com/profile_images/378800000785385876/2746948649d44b5a8a050a87fd81259e.png"
 		# scope.tileSources.bedrock = scope.tileSources.grass
 
 		init = ->
@@ -54,6 +56,8 @@ angular.module('tilemapApp')
 			# 		initHash()
 					# drawChunk world
 					# drawBlocks()
+
+			loadTextures()
 
 			# ios overscroll fix
 			document.addEventListener 'touchmove', (e) ->
@@ -75,6 +79,13 @@ angular.module('tilemapApp')
 			# 	scope.world.tiles[0].type = 'road'
 			# , 10000
 
+		loadTextures = ->
+			Blocks = $resource "#{scope.nodeServer}/blocks"
+			Blocks.get (blocks) =>
+				for name, block of blocks
+					scope.tileSources[name] = new Image
+					scope.tileSources[name].src = block.texture
+
 		initCanvas = ->
 			scope.canvas = canvas = element.find('canvas')[0]
 			scope.ctx = ctx = canvas.getContext '2d'
@@ -90,7 +101,7 @@ angular.module('tilemapApp')
 
 			width = canvas.width
 
-			scope.blockSize = width / 30 #scope.world.meta.dims.x
+			scope.blockSize = width / 80 #scope.world.meta.dims.x
 			# console.log scope.blockSize
 
 			# Init touch events
@@ -312,7 +323,7 @@ angular.module('tilemapApp')
 						if scope.tileSources[tile]
 							image = scope.tileSources[tile]
 						else
-							image = scope.tileSources.unknown
+							image = scope.tileSources.default
 					# Draw the image (must be square)
 					@ctx.drawImage image, x0, y0, scope.blockSize, scope.blockSize
 					
