@@ -26,6 +26,9 @@ app.configure ->
 	app.use allowCrossDomain
 	app.use express.bodyParser()
 
+app.get '/', (req, res) ->
+	res.end 'HELLO THERE.'
+
 app.get '/blocks', (req, res) ->
 	res.json blocks
 
@@ -37,7 +40,7 @@ app.get '/populate/:centerHash', (req, res) ->
 	# Call the main population method
 	new Populator req.params.centerHash
 
-app.listen 9300, ->
+app.listen 80, ->
 	servlog 'server started! woohoo!'
 	# Fake a populator request
 	# centerHash = 'drt2v5b0'
