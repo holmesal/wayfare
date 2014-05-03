@@ -40,7 +40,7 @@ app.get '/populate/:centerHash', (req, res) ->
 	# Call the main population method
 	new Populator req.params.centerHash
 
-app.listen 80, ->
+app.listen 9300, ->
 	servlog 'server started! woohoo!'
 	# Fake a populator request
 	# centerHash = 'drt2v5b0'

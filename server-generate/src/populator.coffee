@@ -1,3 +1,5 @@
+# Shoul	d wrap this up s a library for placing random or procedurally-generated items on a grid
+
 pop = require('debug')('pop')
 {Geohash} = require('./utils/geohash')
 Firebase = require 'firebase'
@@ -39,6 +41,7 @@ class Populator
 			chunk.on 'loaded', @checkLoaded
 
 	generate: ->
+		# Generate buildings
 		Generators.Buildings.generate @canvas
 
 	checkLoaded: =>

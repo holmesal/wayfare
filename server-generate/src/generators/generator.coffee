@@ -8,6 +8,7 @@ class Generator
 		@maxPlaceAttempts = 20
 		@log 'new generator'
 		@blocks = @canvas.blocks
+		@attempts = 0
 
 	randomPlace: (size) ->
 		if @attempts then @attempts++ else @attempts=0

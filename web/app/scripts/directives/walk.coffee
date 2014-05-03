@@ -123,6 +123,13 @@ angular.module('tilemapApp')
 				scope.drag =
 					x: 0
 					y: 0
+
+			Hammer(scope.canvas).on 'tap', (e) ->
+				chunk = scope.chunks[0]
+				rando = Math.floor(Math.random()*chunk.data.blocks.length)
+				chunk.data.blocks[rando].stack[0] = 'doge'
+				scope.$apply ->
+
 				
 
 		updateTouch = (e) ->

@@ -15,8 +15,11 @@ class BuildingGenerator extends Generator
 
 		# Pick how many buildings
 		@count = 10
-		
-		for num in [0..@count]
+
+		# Pick how many retries before giving up with less than @count placed
+		@maxAttempts = 20
+
+		while @attempts < @maxAttempts
 			size = 
 				x: 11
 				y: 11
